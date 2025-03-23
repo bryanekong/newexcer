@@ -1,0 +1,20 @@
+
+stages:
+  - test
+
+test_suite:
+  image: cypress/browsers:node18.12.0-chrome107
+  stage: test
+  before_script:
+    - npm install
+    - npm install -g json-server
+    - json-server --watch mock-api/db.json --routes mock-api/routes.json --port 5000 &
+    - sleep 5
+  script:
+    - npx cypress run
+
+load_test:
+  image: grafana/k6
+  stage: test
+  script:
+    - k6 run k6/api-load-test.js
