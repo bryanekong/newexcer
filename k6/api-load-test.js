@@ -4,11 +4,11 @@ import { check, sleep } from 'k6';
 
 export const options = {
   vus: 10,
-  duration: '30s',
+  duration: '10s',
 };
 
 export default function () {
-  const res = http.get('http://localhost:5000/products');
+  const res = http.get('https://www.google.com/');
   check(res, {
     'status was 200': (r) => r.status === 200,
   });
